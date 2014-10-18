@@ -1,0 +1,78 @@
+<project name="sample-fix-app" default="dist">
+
+    <property name="src" location="src"/>
+    <property name="lib" location="lib"/>
+    <property name="build" location="./out/production/sample-fix-app"/>
+    <property name="dist"  location="./dist"/>
+
+    <target name="clean" description="clean up" >
+        <delete dir="${build}"/>
+    </target>
+
+    <target name="init">
+        <mkdir dir="${build}"/>
+        <mkdir dir="${dist}"/>
+    </target>
+
+    <target name="compile" depends="clean, init" description="compile the source" >
+        <javac srcdir="${src}" destdir="${build}">
+           <classpath>
+               <!--<pathelement path="${classpath}"/>-->
+               <fileset dir="${lib}">
+                   <include name="**/*.jar"/>
+               </fileset>
+           </classpath>
+        </javac>
+    </target>
+
+    <target name="dist" depends="compile"
+            description="generate the distribution" >
+
+        <jar jarfile="${dist}/sample-app.jar" basedir="${build}"/>
+
+        <mkdir dir="${dist}/lib"/>
+        <mkdir dir="${dist}/lib/etc"/>
+
+        <copy file="${lib}/nextfix.jar" todir="${dist}/lib"/>
+        <copy file="${lib}/mina-core-1.1.7.jar" todir="${dist}/lib"/>
+        <copy file="${lib}/slf4j-jdk14-1.6.3.jar" todir="${dist}/lib"/>
+        <copy file="${lib}/slf4j-api-1.6.3.jar" todir="${dist}/lib"/>
+        <copydir src="${lib}/etc" dest="${dist}/lib/etc"/>
+
+        <copy file="fix.cfg" todir="${dist}"/>
+
+        <echo file="${dist}/run.sh">#!/bin/sh
+CONFIG="fix.cfg"
+USER="U000001"
+PASS="12345"
+
+APP_HOME=`dirname $0`
+
+CLASSPATH="$CLASSPATH:$APP_HOME/sample-app.jar"
+CLASSPATH="$CLASSPATH:$APP_HOME/lib/nextfix.jar"
+CLASSPATH="$CLASSPATH:$APP_HOME/lib/mina-core-1.1.7.jar"
+CLASSPATH="$CLASSPATH:$APP_HOME/lib/slf4j-jdk14-1.6.3.jar"
+CLASSPATH="$CLASSPATH:$APP_HOME/lib/slf4j-api-1.6.3.jar"
+
+java -cp "$CLASSPATH" kz.kase.next.fix.SampleClient $CONFIG $USER $PASS
+       </echo>
+       <chmod file="${dist}/run.sh" perm="+x"/>
+
+        <echo file="${dist}/run.bat">
+            title Next. Trade System
+
+            set CLASSPATH=%CLASSPATH%;sample-app.jar
+            set CLASSPATH=%CLASSPATH%;lib/nextfix.jar
+            set CLASSPATH=%CLASSPATH%;lib/mina-core-1.1.7.jar
+            set CLASSPATH=%CLASSPATH%;lib/slf4j-jdk14-1.6.3.jar
+            set CLASSPATH=%CLASSPATH%;lib/slf4j-api-1.6.3.jar
+
+            java -cp %CLASSPATH% ${main.class} %1 %2 %3
+
+            pause
+        </echo>
+    </target>
+
+<!--test -->
+
+</project>

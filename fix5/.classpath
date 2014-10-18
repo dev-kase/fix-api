@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="/sample-fix-app/src"/>
+	<classpathentry kind="lib" path="lib/mina-core-1.1.7-sources.jar"/>
+    <classpathentry kind="lib" path="lib/mina-core-1.1.7.jar"/>
+    <classpathentry kind="lib" path="lib/nextfix.jar"/>
+    <classpathentry kind="lib" path="lib/slf4j-api-1.6.3.jar"/>
+    <classpathentry kind="lib" path="lib/slf4j-jdk14-1.6.3.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
