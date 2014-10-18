@@ -35,6 +35,7 @@ public class SampleClient {
         }
 
         //Настройки сессии берем из конфиг-файла
+        //Тест проекта
         SessionSettings settings = new SessionSettings(new FileInputStream(configFile));
 
         MyApplication app = new MyApplication();
