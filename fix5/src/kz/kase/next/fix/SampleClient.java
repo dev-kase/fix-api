@@ -25,6 +25,7 @@ public class SampleClient {
 
             try{
                 theDir.mkdir();
+                
                 result = true;
             } catch(SecurityException se){
 
