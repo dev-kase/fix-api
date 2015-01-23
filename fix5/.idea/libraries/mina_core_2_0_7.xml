@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="mina-core-2.0.7">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/mina-core-2.0.7.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/nextfix.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/slf4j-api-1.6.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/slf4j-jdk14-1.6.3.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
