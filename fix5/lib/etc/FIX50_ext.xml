@@ -80,21 +80,23 @@
             <field name="RawData" required="N"/>
         </message>
         <message name="Email" msgtype="C" msgcat="app">
-            <field name="EmailThreadID" required="Y"/>
-            <field name="EmailType" required="Y"/>
+            <!--<field name="EmailThreadID" required="N"/>-->
+            <!--<field name="EmailType" required="N"/>-->
             <field name="OrigTime" required="N"/>
-            <field name="Subject" required="Y"/>
-            <field name="EncodedSubjectLen" required="N"/>
-            <field name="EncodedSubject" required="N"/>
-            <component name="RoutingGrp" required="N"/>
+            <field name="Subject" required="N"/>
+            <field name="Message" required="N"/>
+
+            <!--<field name="EncodedSubjectLen" required="N"/>-->
+            <!--<field name="EncodedSubject" required="N"/>-->
+        <!--    <component name="RoutingGrp" required="N"/>
             <component name="InstrmtGrp" required="N"/>
             <component name="UndInstrmtGrp" required="N"/>
-            <component name="InstrmtLegGrp" required="N"/>
-            <field name="OrderID" required="N"/>
-            <field name="ClOrdID" required="N"/>
-            <component name="LinesOfTextGrp" required="Y"/>
-            <field name="RawDataLength" required="N"/>
-            <field name="RawData" required="N"/>
+            <component name="InstrmtLegGrp" required="N"/>-->
+            <!--<field name="OrderID" required="N"/>-->
+            <!--<field name="ClOrdID" required="N"/>-->
+            <!--<component name="LinesOfTextGrp" required="Y"/>-->
+            <!--<field name="RawDataLength" required="N"/>-->
+            <!--<field name="RawData" required="N"/>-->
         </message>
         <message name="QuoteRequest" msgtype="R" msgcat="app">
             <field name="QuoteReqID" required="Y"/>
@@ -603,10 +605,15 @@
         </message>
         <message name="PositionTransferInstruction" msgtype="DL" msgcat="app">
             <field name="TransferInstructionID" required="Y"/>
-            <component name="TargetParties" required="Y"/>
+            <component name="TargetParties" required="N"/>
             <field name="Symbol" required="N"/>
+            <field name="Account" required="N"/>
             <component name="PositionQty" required="N"/>
             <field name="Currency" required="N"/>
+        </message>
+        <message name="PositionTransferReport" msgtype="DN" msgcat="app">
+            <field name="TransferInstructionID" required="Y"/>
+            <field name="TransferStatus" required="N"/>
         </message>
         <message name="NewOrderSingle" msgtype="D" msgcat="app">
             <field name="ClOrdID" required="Y"/>
@@ -2866,7 +2873,6 @@
             <component name="TradingSessionRulesGrp" required="N"/>
             <component name="NestedInstrumentAttribute" required="N"/>
             <component name="TimeInForceRules" required="N"/>
-
         </component>
 
         <component name="TimeInForceRules">
@@ -2980,6 +2986,16 @@
             <field name="MinPriceIncrement" required="N"/>
             <field name="PositionLimit" required="N"/>
             <field name="NTPositionLimit" required="N"/>
+            <field name="MarginRatio" required="N"/>
+            <field name="YieldType" required="N"/>
+            <field name="Yield" required="N"/>
+            <field name="YieldCalcDate" required="N"/>
+            <field name="YieldRedemptionDate" required="N"/>
+            <field name="PaymentStreamDiscountRateDayCount" required="N"/>
+            <field name="AllocAccruedInterestAmt" required="N"/>
+            <field name="YieldRedemptionPrice" required="N"/>
+            <field name="YieldRedemptionPriceType" required="N"/>
+            <field name="PaymentStreamMarketRate" required="N"/>
             <component name="InstrumentParties" required="N"/>
             <field name="UnitofMeasure" required="N"/>
             <field name="TimeUnit" required="N"/>
@@ -3006,7 +3022,6 @@
             <field name="IsFuture" required="N"/>
             <field name="ContractMultiplier" required="N"/>
             <field name="UnderlyingInstrId" required="N"/>
-            <field name="MarginRatio" required="N"/>
             <field name="MaintenanceMargin" required="N"/>
         </component>
         <component name="InstrumentExtension">
@@ -3014,6 +3029,7 @@
             <field name="PctAtRisk" required="N"/>
             <component name="AttrbGrp" required="N"/>
         </component>
+
         <component name="InstrumentLeg">
             <field name="LegSymbol" required="N"/>
             <field name="LegSymbolSfx" required="N"/>
@@ -3235,8 +3251,8 @@
         <component name="YieldData">
             <field name="YieldType" required="N"/>
             <field name="Yield" required="N"/>
-            <field name="YieldCalcDate" required="N"/>
             <field name="YieldRedemptionDate" required="N"/>
+            <field name="YieldCalcDate" required="N"/>
             <field name="YieldRedemptionPrice" required="N"/>
             <field name="YieldRedemptionPriceType" required="N"/>
         </component>
@@ -3805,6 +3821,7 @@
                 <field name="AvegPrc" required="N"/>
                 <field name="AvegPrcPrev" required="N"/>
                 <field name="OpenedPos" required="N"/>
+                <field name="LastDealDate" required="N"/>
             </group>
         </component>
         <component name="MDReqGrp">
@@ -4144,6 +4161,10 @@
                 <field name="Text" required="N"/>
                 <field name="EncodedTextLen" required="N"/>
                 <field name="EncodedText" required="N"/>
+                <field name="HighLimitPrice" required="N"/>
+                <field name="LowLimitPrice" required="N"/>
+                <field name="TradingReferencePrice" required="N"/>
+
             </group>
         </component>
         <component name="SecTypesGrp">
@@ -4909,6 +4930,7 @@
             <value enum="C" description="EMAIL"/>
             <value enum="D" description="ORDER_SINGLE"/>
             <value enum="DL" description="POSITION_TRANSFER_INSTRUCTION"/>
+            <value enum="DN" description="POSITION_TRANSFER_REPORT"/>
             <value enum="E" description="ORDER_LIST"/>
             <value enum="F" description="ORDER_CANCEL_REQUEST"/>
             <value enum="G" description="ORDER_CANCEL_REPLACE_REQUEST"/>
@@ -5760,7 +5782,7 @@
             <value enum="VALUE1_32" description="YIELD_VALUE_OF_1_32"/>
             <value enum="WORST" description="YIELD_TO_WORST"/>
         </field>
-        <field number="236" name="Yield" type="PERCENTAGE"/>
+        <field number="236" name="Yield" type="FLOAT"/>
         <field number="237" name="TotalTakedown" type="AMT"/>
         <field number="238" name="Concession" type="AMT"/>
         <field number="239" name="RepoCollateralSecurityType" type="INT"/>
@@ -7967,7 +7989,7 @@
             <value enum="7" description="OUTSTANDING_TRADES"/>
         </field>
         <field number="897" name="NoTrades" type="NUMINGROUP"/>
-        <!--<field number="898" name="MarginRatio" type="PERCENTAGE"/>-->
+        <field number="898" name="MarginRatio" type="PERCENTAGE"/>
         <field number="899" name="MarginExcess" type="AMT"/>
         <field number="900" name="TotalNetValue" type="AMT"/>
         <field number="901" name="CashOutstanding" type="AMT"/>
@@ -8562,17 +8584,19 @@
         <field number="1138" name="DisplayQty" type="QTY"/>
         <field number="1139" name="ExchangeSpecialInstructions" type="STRING"/>
         <field number="1143" name="MaxPriceVariation" type="PRICE"/>
+        <field number="1148" name="LowLimitPrice" type="FLOAT"/>
+        <field number="1149" name="HighLimitPrice" type="FLOAT"/>
+        <field number="1150" name="TradingReferencePrice" type="FLOAT"/>
         <field number="1151" name="SecurityGroup" type="STRING"/>
         <field number="1173" name="MDSubBookType" type="STRING"/>
         <field number="1245" name="TradingCurrency" type="STRING"/>
         <field number="1237" name="NoOrdTypeRules" type="INT"/>
-
         <field number="1239" name="NoTimeInForceRules" type="INT"/>
-
         <field number="1309" name="NoTradingSessionRules" type="INT"/>
         <field number="1461" name="NoTargetPartyIDs" type="INT"/>
         <field number="1462" name="TargetPartyID" type="STRING"/>
         <field number="2436" name="TransferInstructionID" type="STRING"/>
+        <field number="2442" name="TransferStatus" type="INT"/>
         <field number="5450" name="MDElementName" type="INT">
             <value enum="1" description="BEST_BID"/>
             <value enum="2" description="BEST_OFFER"/>
@@ -8770,15 +8794,18 @@
         <field number="5187" name="WhoRemoved" type="STRING"/>
         <field number="5188" name="DealType" type="STRING"/>
         <field number="5189" name="RefSesId" type="STRING"/>
+        <field number="5204" name="Message" type="STRING"/>
+        <field number="5205" name="LastDealDate" type="UTCTIMESTAMP"/>
 
         <!--Futures-->
         <field number="5190" name="IsFuture" type="BOOLEAN"/>
         <field number="5191" name="ContractMultiplier" type="INT"/>
         <field number="5192" name="UnderlyingInstrId" type="INT"/>
-        <field number="5193" name="MarginRatio" type="FLOAT"/>
         <field number="5194" name="MaintenanceMargin" type="FLOAT"/>
         <field number="1312" name="NoNestedInstrAttrib" type="NUMINGROUP"/>
         <field number="1210" name="NestedInstrAttribType" type="INT"/>
         <field number="1211" name="NestedInstrAttribValue" type="STRING"/>
+        <field number="40746" name="PaymentStreamDiscountRateDayCount" type="STRING"/>
+        <field number="40739" name="PaymentStreamMarketRate" type="FLOAT"/>
     </fields>
 </fix>

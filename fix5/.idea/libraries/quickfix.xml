@@ -1,15 +1,10 @@
 <component name="libraryTable">
   <library name="quickfix">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/lib/mina-core-1.1.7.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/slf4j-api-1.6.3.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/slf4j-jdk14-1.6.3.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/quickfixj-all-1.5.3.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES>
-      <root url="jar://$PROJECT_DIR$/lib/mina-core-1.1.7-sources.jar!/" />
-      <root url="file://$PROJECT_DIR$/../quickfixj-1.5.3-bin/quickfixj/src" />
-    </SOURCES>
+    <SOURCES />
   </library>
 </component>
