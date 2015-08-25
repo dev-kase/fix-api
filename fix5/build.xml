@@ -4,6 +4,7 @@
     <property name="lib" location="./lib"/>
     <property name="build" location="./out/production/sample-fix-app"/>
     <property name="dist"  location="./dist"/>
+    <property name="classpath"  location=""/>
 
     <target name="clean" description="clean up" >
         <delete dir="${build}"/>
@@ -17,7 +18,7 @@
     <target name="compile" depends="clean, init" description="compile the source" >
         <javac srcdir="${src}" destdir="${build}">
             <classpath>
-                <!--<pathelement path="${classpath}"/>-->
+                <pathelement path="${classpath}"/>
                 <fileset dir="${lib}">
                     <include name="**/*.jar"/>
                 </fileset>
@@ -28,13 +29,18 @@
     <target name="dist" depends="compile"
             description="generate the distribution" >
 
-        <jar jarfile="${dist}/sample-app.jar" basedir="${build}"/>
+        <jar jarfile="${dist}/sample-app.jar" basedir="${build}">
+            <manifest>
+                <attribute name="Main-Class" value="fix.SampleClient"/>
+            </manifest>
+        </jar>
 
         <mkdir dir="${dist}/lib"/>
         <mkdir dir="${dist}/lib/etc"/>
 
-        <copy file="${lib}/mina-core-1.1.7.jar" todir="${dist}/lib"/>
-        <copy file="${lib}/quickfixj-all-1.5.3.jar" todir="${dist}/lib"/>
+        <copy file="next-client.jks" todir="${dist}"/>
+        <copy file="${lib}/mina-core-2.0.7.jar" todir="${dist}/lib"/>
+        <copy file="${lib}/nextfix.jar" todir="${dist}/lib"/>
         <copy file="${lib}/slf4j-jdk14-1.6.3.jar" todir="${dist}/lib"/>
         <copy file="${lib}/slf4j-api-1.6.3.jar" todir="${dist}/lib"/>
         <copydir src="${lib}/etc" dest="${dist}/lib/etc"/>
@@ -49,12 +55,12 @@
             APP_HOME=`dirname $0`
 
             CLASSPATH="$CLASSPATH:$APP_HOME/sample-app.jar"
-            CLASSPATH="$CLASSPATH:$APP_HOME/lib/quickfixj-all-1.5.3.jar"
-            CLASSPATH="$CLASSPATH:$APP_HOME/lib/mina-core-1.1.7.jar"
+            CLASSPATH="$CLASSPATH:$APP_HOME/lib/nextfix.jar"
+            CLASSPATH="$CLASSPATH:$APP_HOME/lib/mina-core-2.0.7.jar"
             CLASSPATH="$CLASSPATH:$APP_HOME/lib/slf4j-jdk14-1.6.3.jar"
             CLASSPATH="$CLASSPATH:$APP_HOME/lib/slf4j-api-1.6.3.jar"
 
-            java -cp "$CLASSPATH" kz.kase.next.fix.SampleClient
+            java -cp "$CLASSPATH" fix.SampleClient
         </echo>
         <chmod file="${dist}/run.sh" perm="+x"/>
 
@@ -62,12 +68,12 @@
             title Next. Trade System
 
             set CLASSPATH=%CLASSPATH%;sample-app.jar
-            set CLASSPATH=%CLASSPATH%;lib/mina-core-1.1.7.jar
-            set CLASSPATH=%CLASSPATH%;lib/quickfixj-all-1.5.3.jar
+            set CLASSPATH=%CLASSPATH%;lib/mina-core-2.0.7.jar
+            set CLASSPATH=%CLASSPATH%;lib/nextfix.jar
             set CLASSPATH=%CLASSPATH%;lib/slf4j-jdk14-1.6.3.jar
             set CLASSPATH=%CLASSPATH%;lib/slf4j-api-1.6.3.jar
 
-            java -cp %CLASSPATH% kz.kase.next.fix.SampleClient
+            java -cp %CLASSPATH% fix.SampleClient
 
             pause
         </echo>
