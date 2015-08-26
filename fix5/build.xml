@@ -77,6 +77,8 @@
 
             pause
         </echo>
+
+        <zip destfile="./fix5api.zip" basedir="${dist}"/>
     </target>
 
     <!--test -->
