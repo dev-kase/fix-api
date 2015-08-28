@@ -605,15 +605,10 @@
         </message>
         <message name="PositionTransferInstruction" msgtype="DL" msgcat="app">
             <field name="TransferInstructionID" required="Y"/>
-            <component name="TargetParties" required="N"/>
+            <component name="TargetParties" required="Y"/>
             <field name="Symbol" required="N"/>
-            <field name="Account" required="N"/>
             <component name="PositionQty" required="N"/>
             <field name="Currency" required="N"/>
-        </message>
-        <message name="PositionTransferReport" msgtype="DN" msgcat="app">
-            <field name="TransferInstructionID" required="Y"/>
-            <field name="TransferStatus" required="N"/>
         </message>
         <message name="NewOrderSingle" msgtype="D" msgcat="app">
             <field name="ClOrdID" required="Y"/>
@@ -4930,7 +4925,6 @@
             <value enum="C" description="EMAIL"/>
             <value enum="D" description="ORDER_SINGLE"/>
             <value enum="DL" description="POSITION_TRANSFER_INSTRUCTION"/>
-            <value enum="DN" description="POSITION_TRANSFER_REPORT"/>
             <value enum="E" description="ORDER_LIST"/>
             <value enum="F" description="ORDER_CANCEL_REQUEST"/>
             <value enum="G" description="ORDER_CANCEL_REPLACE_REQUEST"/>
@@ -8596,7 +8590,6 @@
         <field number="1461" name="NoTargetPartyIDs" type="INT"/>
         <field number="1462" name="TargetPartyID" type="STRING"/>
         <field number="2436" name="TransferInstructionID" type="STRING"/>
-        <field number="2442" name="TransferStatus" type="INT"/>
         <field number="5450" name="MDElementName" type="INT">
             <value enum="1" description="BEST_BID"/>
             <value enum="2" description="BEST_OFFER"/>

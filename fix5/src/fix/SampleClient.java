@@ -2,8 +2,8 @@ package fix;
 
 import kz.kase.fix.SecurityListRequestType;
 import kz.kase.fix.factory.KaseFixMessageFactory;
+import kz.kase.fix.messages.OrderStatusRequest;
 import kz.kase.fix.messages.SecurityListRequest;
-import kz.kase.fix.messages.TradeCaptureReportRequest;
 import quickfix.*;
 import quickfix.logging.LogFactory;
 import quickfix.logging.ScreenLogFactory;
@@ -13,25 +13,27 @@ import quickfix.store.MessageStoreFactory;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Random;
 
 public class SampleClient {
 
-    public static File getDialsDir() {
-        return DIALS_DIR;
+    public static File getDealsDir() {
+        return DEALS_DIR;
+    }
+
+    public static File getOrdersDir() {
+        return ORDERS_DIR;
     }
 
     public static File getInstrDir() {
         return INSTR_DIR;
     }
 
-    private static final File DIALS_DIR = new File("files.deal");
+    private static final File ORDERS_DIR = new File("files.order");
+    private static final File DEALS_DIR = new File("files.deal");
     private static final File INSTR_DIR = new File("files.inst");
 
-    private static final String FIX_CFG = "fix.cfg";
+    private static final String FIX_CFG = "fix5/fix.cfg";
     public static final String HEART_BT_INT = "HeartBtInt";
 
     public static final int REF_RAND_SEED = 100000;
@@ -74,12 +76,21 @@ public class SampleClient {
             }
         }
 
-        if (!DIALS_DIR.exists()) {
+        if (!DEALS_DIR.exists()) {
             System.out.println("Creating directory: deals");
-            boolean result = DIALS_DIR.mkdir();
+            boolean result = DEALS_DIR.mkdir();
 
             if (result) {
                 System.out.println("Deals directory created");
+            }
+        }
+
+        if (!ORDERS_DIR.exists()) {
+            System.out.println("Creating directory: orders");
+            boolean result = ORDERS_DIR.mkdir();
+
+            if (result) {
+                System.out.println("Orders directory created");
             }
         }
 
@@ -113,7 +124,7 @@ public class SampleClient {
 
     private void orderStatusReq() {
 
-        TradeCaptureReportRequest trdReq = new TradeCaptureReportRequest();
+/*        TradeCaptureReportRequest trdReq = new TradeCaptureReportRequest();
         trdReq.setTradeReqId("0");
         trdReq.setTradeReqType(0);
         trdReq.setSymbol("0");
@@ -130,11 +141,17 @@ public class SampleClient {
 
         } catch (ParseException e) {
             e.printStackTrace();
-        }
+        }*/
+
+        OrderStatusRequest ordReq = new OrderStatusRequest();
+        ordReq.setRef(nextRef());
+        app.sendMessage(ordReq);
+
     }
 
     public static long nextRef() {
         return new Random(System.currentTimeMillis()).nextInt(REF_RAND_SEED);
     }
 
+    //http://opalev.blogspot.com/2011/04/apache-ant-windows.html
 }

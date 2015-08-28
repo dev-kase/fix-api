@@ -129,7 +129,6 @@
             <value enum='C' description='EMAIL'/>
             <value enum='D' description='ORDER_SINGLE'/>
             <value enum='DL' description='POSITION_TRANSFER_INSTR'/>
-            <value enum='DN' description='POSITION_TRANSFER_REPORT'/>
             <value enum='E' description='ORDER_LIST'/>
             <value enum='F' description='ORDER_CANCEL_REQUEST'/>
             <value enum='G' description='ORDER_CANCEL_REPLACE_REQUEST'/>
