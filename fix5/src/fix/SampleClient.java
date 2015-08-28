@@ -33,7 +33,7 @@ public class SampleClient {
     private static final File DEALS_DIR = new File("files.deal");
     private static final File INSTR_DIR = new File("files.inst");
 
-    private static final String FIX_CFG = "fix5/fix.cfg";
+    private static final String FIX_CFG = "fix.cfg";
     public static final String HEART_BT_INT = "HeartBtInt";
 
     public static final int REF_RAND_SEED = 100000;
