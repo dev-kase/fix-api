@@ -17,19 +17,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
+import static kz.kase.fix.FixProtocol.*;
+import static kz.kase.fix.FixProtocol.FIELD_PRODUCT;
+import static kz.kase.fix.FixProtocol.FIELD_SECURITY_ID;
+
 public class MyApplication implements Application {
 
-    public static final int FIELD_ORDER_SERIAL = 5181;
-    public static final int FIELD_DEAL_SERIAL = 5185;
-    public static final int FIELD_CASH_QTY = 152;
     public static final int FIELD_TRANSACTION_TIME = 60;
-    public static final int FIELD_ACCOUNT_NAME = 448;
-    public static final int FIELD_ORDER_ID = 37;
-    public static final int FIELD_USERNAME = 553;
     public static final int FIELD_SETTLEMENT_DATE = 64;
-    public static final int FIELD_NIN = 5032;
     public static final String PASS = "Password";
-    public static final String DEALS_FOLDER = "deals/";
 
     public static final DateFormat dateFormatter1 = new SimpleDateFormat("yyyyMMdd-HH:mm:ss");
     public static final DateFormat dateFormatter2 = new SimpleDateFormat("yyyyMMdd");
@@ -96,11 +92,11 @@ public class MyApplication implements Application {
         if (message instanceof SecurityList) {
 
             SecurityList secList = (SecurityList) message;
-            List<Group> secLst = secList.getGroups(FixProtocol.FIELD_NO_RELATED_SYM);
+            List<Group> secLst = secList.getGroups(FIELD_NO_RELATED_SYM);
 
             for (Group secGrp : secLst) {
                 try {
-                    String symbol = secGrp.getString(FixProtocol.FIELD_SYMBOL);
+                    String symbol = secGrp.getString(FIELD_SYMBOL);
 
                     File instrFile =
                             new File(SampleClient.getInstrDir() + "/" + symbol);
@@ -108,15 +104,60 @@ public class MyApplication implements Application {
                     FileWriter fw = new FileWriter(instrFile.getAbsoluteFile(), false);
                     BufferedWriter bw = new BufferedWriter(fw);
 
-                    String secId = secGrp.getString(FixProtocol.FIELD_SECURITY_ID);
-                    String prod = secGrp.getString(FixProtocol.FIELD_PRODUCT);
-                    String secDesc = fromHexString(secGrp.getString(FixProtocol.FIELD_SECURITY_DESC));
+                    String secId = secGrp.getString(FIELD_SECURITY_ID);
+                    String prod = secGrp.getString(FIELD_PRODUCT);
+                    String secDesc = fromHexString(secGrp.getString(FIELD_SECURITY_DESC));
+
+/*                    TimeInForce ti = TimeInForce.valueOf(secGrp.getChar(FIELD_TIME_IN_FORCE));
+                    int minTradeVol = secGrp.getInt(FIELD_MIN_TRADE_VOL);
+                    int maxTradeVol = secGrp.getInt(FIELD_MAX_TRADE_VOL);
+                    double maxPrcVariation = secGrp.getDouble(FIELD_MAX_PRICE_VARIATION);
+                    String trCurr = secGrp.getString(FIELD_TRADING_CURRENCY);
+                    int lot = secGrp.getInt(FIELD_ROUND_LOT);
+                    int securityStatus = secGrp.getInt(FIELD_SECURITY_STATUS);
+                    String text = secGrp.getString(FIELD_TEXT);
+                    Long nominal = secGrp.getLong(FIELD_NOMINAL_VALUE);
+                    double limDevAvg = secGrp.getDouble(FIELD_DEV_LIMIT_AVG_PRICE_VALUE);
+                    double limMarketPrc = secGrp.getInt(FIELD_DEV_LIM_MARKET_PRC_VALUE);
+                    double step = secGrp.getDouble(FIELD_MIN_PRICE_INCREMENT);
+                    Date matDate = secGrp.getUtcDateOnly(FIELD_MATURITY_DATE);
+                    boolean isFutures = secGrp.getBoolean(FIELD_IS_FUTURE);
+
+                    String legs = "Instrument_Repo_Legs:\n";
+                    if (!secGrp.getBoolean(FIELD_NO_LEGS)) {
+                        Group leg1 = secGrp.getGroup(1, FIELD_NO_LEGS);
+                        legs += "\tLegs1=";
+                        legs += leg1.getString(FIELD_LEG_SYMBOL) + "\n";
+
+                        Group leg2 = secGrp.getGroup(2, FIELD_NO_LEGS);
+                        legs += "\tLegs2=";
+                        legs += leg2.getString(FIELD_LEG_SYMBOL) + "\n";
+                    }*/
+
 
                     String instrInfo = "";
                     instrInfo += "Instrument_Id=" + secId + "\n"
                             + "Instrument_Prod=" + prod + "\n"
                             + "Instrument_ShortName=" + symbol + "\n"
-                            + "Instrument_Name=" + secDesc + "\n";
+                            + "Instrument_FullName=" + secDesc + "\n"
+
+/*                            + "Instrument_TimeInForce=" + ti + "\n"
+                            + "Instrument_MaxTradeVol=" + maxTradeVol + "\n"
+                            + "Instrument_MinTradeVol=" + minTradeVol + "\n"
+                            + "Instrument_MaxPrcVariation" + maxPrcVariation + "\n"
+                            + "Instrument_TradingCurrency=" + trCurr + "\n"
+                            + "Instrument_Lot=" + lot + "\n"
+                            + "Instrument_SecurityStatus=" + securityStatus + "\n"
+                            + "Instrument_AllowedSides=" + text + "\n"
+                            + "Instrument_Nominal=" + nominal + "\n"
+                            + "Instrument_LimDeviationFromAvgPrc=" + limDevAvg + "\n"
+                            + "Instrument_LimDeviationFromMarketPrc=" + limMarketPrc + "\n"
+                            + "Instrument_PriceStep=" + step + "\n"
+                            + "Instrument_MaturityDate=" + matDate + "\n"
+                            + "Instrument_IsFutures=" + isFutures + "\n"
+                            + legs
+*/
+                    ;
 
                     bw.write(instrInfo);
                     bw.close();
@@ -131,8 +172,7 @@ public class MyApplication implements Application {
             ExecutionReport report = (ExecutionReport) message;
             if (report.getExecType() == ExecType.TRADE) {
                 writeDeal(report);
-            }
-            else if (report.getExecType() == ExecType.ORDER_STATUS) {
+            } else if (report.getExecType() == ExecType.ORDER_STATUS) {
                 writeOrder(report);
             }
         }
@@ -143,9 +183,9 @@ public class MyApplication implements Application {
 
             String exId = report.getExecId();
 
-            if(exId==null || exId.equals("")) return;
+            if (exId == null || exId.equals("")) return;
 
-            File dealFile = new File(SampleClient.getDealsDir() +"/"+ exId);
+            File dealFile = new File(SampleClient.getDealsDir() + "/" + exId);
 
             if (dealFile.exists()) return;
 
@@ -171,6 +211,8 @@ public class MyApplication implements Application {
                 dealInfo += "Deal_UserNick=" + report.getUserName() + "\n";
                 dealInfo += "Deal_SettlDate=" + dateFormatter3.format(s) + "\n";
                 dealInfo += "Deal_OrderStatus=" + report.getOrderStatus() + "\n";
+                dealInfo += "Deal_OrderId=" + report.getOrderId() + "\n";
+                dealInfo += "Deal_DealType=" + report.getDealType() + "\n"; //REGULAR_DEAL=Обычная, SWAP_DEAL=Своп, SWAP_LEG_DEAL=Нога свопа, REPO_DEAL=Репо
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -189,9 +231,9 @@ public class MyApplication implements Application {
 
             String exId = report.getOrderId();
 
-            if(exId==null || exId.equals("")) return;
+            if (exId == null || exId.equals("")) return;
 
-            File orderFile = new File(SampleClient.getOrdersDir() +"/"+ exId);
+            File orderFile = new File(SampleClient.getOrdersDir() + "/" + exId);
 
             if (orderFile.exists()) return;
 
