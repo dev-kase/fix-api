@@ -2,6 +2,7 @@ package fix;
 
 import kz.kase.fix.SecurityListRequestType;
 import kz.kase.fix.factory.KaseFixMessageFactory;
+import kz.kase.fix.messages.MarketDataRequest;
 import kz.kase.fix.messages.OrderStatusRequest;
 import kz.kase.fix.messages.SecurityListRequest;
 import quickfix.*;
@@ -29,9 +30,14 @@ public class SampleClient {
         return INSTR_DIR;
     }
 
+    public static File getMdRefrDir() {
+        return MDREFR_DIR;
+    }
+
     private static final File ORDERS_DIR = new File("files.order");
     private static final File DEALS_DIR = new File("files.deal");
     private static final File INSTR_DIR = new File("files.inst");
+    private static final File MDREFR_DIR = new File("files.mdref");
 
     private static final String FIX_CFG = "fix.cfg";
     public static final String HEART_BT_INT = "HeartBtInt";
@@ -98,6 +104,7 @@ public class SampleClient {
 
         client.securityListReq();
         client.orderStatusReq();
+        client.mdRefreshReq();
 
         while (!client.isStopped()) {
             Thread.sleep(HARD_BEAT_SEC);
@@ -123,30 +130,15 @@ public class SampleClient {
     }
 
     private void orderStatusReq() {
-
-/*        TradeCaptureReportRequest trdReq = new TradeCaptureReportRequest();
-        trdReq.setTradeReqId("0");
-        trdReq.setTradeReqType(0);
-        trdReq.setSymbol("0");
-
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
-        try {
-
-            Date parsedDate = formatter.parse("20140916");
-
-            trdReq.setFromDate(parsedDate);
-            trdReq.setTillDate(new Date());
-
-            app.sendMessage(trdReq);
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }*/
-
         OrderStatusRequest ordReq = new OrderStatusRequest();
         ordReq.setRef(nextRef());
         app.sendMessage(ordReq);
+    }
 
+    private void mdRefreshReq() {
+        MarketDataRequest mdReq = new MarketDataRequest(false);
+        mdReq.setRef(nextRef());
+        app.sendMessage(mdReq);
     }
 
     public static long nextRef() {
