@@ -41,11 +41,14 @@
         <copy file="next-client.jks" todir="${dist}"/>
         <copy file="${lib}/mina-core-2.0.7.jar" todir="${dist}/lib"/>
         <copy file="${lib}/nextfix.jar" todir="${dist}/lib"/>
-        <copy file="${lib}/slf4j-jdk14-1.6.3.jar" todir="${dist}/lib"/>
+        <!--<copy file="${lib}/slf4j-jdk14-1.6.3.jar" todir="${dist}/lib"/>-->
         <copy file="${lib}/slf4j-api-1.6.3.jar" todir="${dist}/lib"/>
+        <copy file="${lib}/log4j-1.2.17.jar" todir="${dist}/lib"/>
+        <copy file="${lib}/slf4j-log4j12-1.7.12.jar" todir="${dist}/lib"/>
         <copydir src="${lib}/etc" dest="${dist}/lib/etc"/>
 
         <copy file="fix.cfg" todir="${dist}"/>
+        <copy file="log4j.properties" todir="${dist}"/>
 
         <echo file="${dist}/run.sh">#!/bin/sh
             CONFIG="fix.cfg"
