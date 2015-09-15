@@ -1,10 +1,13 @@
 package fix;
 
+import fix.utils.SoutLogger;
 import kz.kase.fix.SecurityListRequestType;
 import kz.kase.fix.factory.KaseFixMessageFactory;
 import kz.kase.fix.messages.MarketDataRequest;
 import kz.kase.fix.messages.OrderStatusRequest;
 import kz.kase.fix.messages.SecurityListRequest;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 import quickfix.*;
 import quickfix.logging.LogFactory;
 import quickfix.logging.ScreenLogFactory;
@@ -17,6 +20,7 @@ import java.io.FileNotFoundException;
 import java.util.Random;
 
 public class SampleClient {
+    public static Logger logger = Logger.getLogger(SampleClient.class);
 
     public static File getDealsDir() {
         return DEALS_DIR;
@@ -72,6 +76,8 @@ public class SampleClient {
     }
 
     public static void main(String[] args) throws Exception {
+        PropertyConfigurator.configure("log4j.properties");
+        SoutLogger.tieSystemOutAndErrToLog();
 
         if (!INSTR_DIR.exists()) {
             System.out.println("Creating directory: instruments");
