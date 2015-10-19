@@ -7,6 +7,7 @@ import kz.kase.fix.messages.ExecutionReport;
 import kz.kase.fix.messages.Logon;
 import kz.kase.fix.messages.MDIncRefresh;
 import kz.kase.fix.messages.SecurityList;
+import org.apache.log4j.Logger;
 import quickfix.*;
 
 import java.io.*;
@@ -21,6 +22,7 @@ import static kz.kase.fix.FixProtocol.*;
 
 public class MyApplication implements Application {
 
+    private final Logger log = Logger.getLogger(getClass().getSimpleName());
     public static final int FIELD_TRANSACTION_TIME = 60;
     public static final int FIELD_SETTLEMENT_DATE = 64;
     public static final String PASS = "Password";
@@ -143,17 +145,6 @@ public class MyApplication implements Application {
                 Date matDate = secGrp.getUtcDateOnly(FIELD_MATURITY_DATE);
                 boolean isFutures = secGrp.getBoolean(FIELD_IS_FUTURE);
 
-                String legs = "Instrument_Repo_Legs:\n";
-                if (!secGrp.getBoolean(FIELD_NO_LEGS)) {
-                    Group leg1 = secGrp.getGroup(1, FIELD_NO_LEGS);
-                    legs += "\tLegs1=";
-                    legs += leg1.getString(FIELD_LEG_SYMBOL) + "\n";
-
-                    Group leg2 = secGrp.getGroup(2, FIELD_NO_LEGS);
-                    legs += "\tLegs2=";
-                    legs += leg2.getString(FIELD_LEG_SYMBOL) + "\n";
-                }
-
 
                 String instrInfo = "";
                 instrInfo += "Instrument_Id=" + secId + "\n"
@@ -175,7 +166,6 @@ public class MyApplication implements Application {
                         + "Instrument_PriceStep=" + step + "\n"
                         + "Instrument_MaturityDate=" + matDate + "\n"
                         + "Instrument_IsFutures=" + isFutures + "\n"
-                        + legs
                 ;
 
                 bw.write(instrInfo);
@@ -206,12 +196,22 @@ public class MyApplication implements Application {
                 Long orders = mdeGrp.getLong(FIELD_NUMBER_OF_ORDERS);
                 Integer deals = mdeGrp.getInt(FIELD_DEALS_COUNT);
                 Double volume = mdeGrp.getDouble(FIELD_TRADE_VOLUME);
+                Double lastPx = mdeGrp.getDouble(FIELD_LAST_PX);
+                Double lastQty = mdeGrp.getDouble(FIELD_LAST_QTY);
+                String tSessId = mdeGrp.getString(FIELD_TRADE_SESSION_ID);
 
                 StringBuilder mdRefInfo = new StringBuilder();
                 mdRefInfo.append("MDRef_ShortName=").append(symbol).append("\n");
                 mdRefInfo.append("MDRef_NumberOfOrders=").append(orders).append("\n");
                 mdRefInfo.append("MDRef_NumberOfDeals=").append(deals).append("\n");
                 mdRefInfo.append("MDRef_TradeVolume=").append(volume).append("\n");
+                mdRefInfo.append("MDRef_LastPrice=").append(lastPx).append("\n");
+                mdRefInfo.append("MDRef_LastQuantity=").append(lastQty).append("\n");
+                mdRefInfo.append("MDRef_TradeSessId=").append(tSessId).append("\n");
+
+                log.debug("");
+                log.debug("\t\t" + symbol + "\t\t\t" + mdRefInfo.toString());
+
 
                 bw.write(mdRefInfo.toString());
                 bw.close();

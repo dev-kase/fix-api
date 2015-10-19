@@ -1,7 +1,9 @@
 package fix;
 
 import fix.utils.SoutLogger;
+import kz.kase.fix.FixProtocol;
 import kz.kase.fix.SecurityListRequestType;
+import kz.kase.fix.SubscriptionType;
 import kz.kase.fix.factory.KaseFixMessageFactory;
 import kz.kase.fix.messages.MarketDataRequest;
 import kz.kase.fix.messages.OrderStatusRequest;
@@ -17,10 +19,10 @@ import quickfix.store.MessageStoreFactory;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.Random;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class SampleClient {
-    public static Logger logger = Logger.getLogger(SampleClient.class);
+    public static Logger log = Logger.getLogger(SampleClient.class);
 
     public static File getDealsDir() {
         return DEALS_DIR;
@@ -35,15 +37,19 @@ public class SampleClient {
     }
 
     public static File getMdRefrDir() {
-        return MDREFR_DIR;
+        return MDREQ_DIR;
     }
 
+    private static AtomicLong ref = new AtomicLong(1);
+
     private static final File ORDERS_DIR = new File("files.order");
+
     private static final File DEALS_DIR = new File("files.deal");
     private static final File INSTR_DIR = new File("files.inst");
-    private static final File MDREFR_DIR = new File("files.mdref");
-
+    private static final File MDREQ_DIR = new File("files.mdreq");
     private static final String FIX_CFG = "fix.cfg";
+    public static final String LOG4J_PROPERTIES = "log4j.properties";
+
     public static final String HEART_BT_INT = "HeartBtInt";
 
     public static final int REF_RAND_SEED = 100000;
@@ -76,7 +82,7 @@ public class SampleClient {
     }
 
     public static void main(String[] args) throws Exception {
-        PropertyConfigurator.configure("log4j.properties");
+        PropertyConfigurator.configure(LOG4J_PROPERTIES);
         SoutLogger.tieSystemOutAndErrToLog();
 
         if (!INSTR_DIR.exists()) {
@@ -103,6 +109,15 @@ public class SampleClient {
 
             if (result) {
                 System.out.println("Orders directory created");
+            }
+        }
+
+        if (!MDREQ_DIR.exists()) {
+            System.out.println("Creating directory: mdreq");
+            boolean result = MDREQ_DIR.mkdir();
+
+            if (result) {
+                System.out.println("MDReq directory created");
             }
         }
 
@@ -142,13 +157,38 @@ public class SampleClient {
     }
 
     private void mdRefreshReq() {
-        MarketDataRequest mdReq = new MarketDataRequest(false);
-        mdReq.setRef(nextRef());
-        app.sendMessage(mdReq);
+        getFullSnapReq(nextRef(), SubscriptionType.SNAPSHOT_AND_UPDATES);
+    }
+
+    public void getFullSnapReq(long MDReqID, SubscriptionType reqType) {
+        log.info("Sending MarketData request");
+
+        MarketDataRequest marketDataRequest = new MarketDataRequest(true);
+        marketDataRequest.setRef(MDReqID);
+        marketDataRequest.setSubscriptionType(reqType);
+        marketDataRequest.setMarketDepth(0);
+
+        String mdEntries = "0:1:2:3:4:5:7:8:B";
+        String[] mdEntriesSplitted = mdEntries.split(":");
+
+
+        for (String mdEntry : mdEntriesSplitted) {
+            MarketDataRequest.NoMDEntryTypes noMDEntryTypes = new MarketDataRequest.NoMDEntryTypes();
+            noMDEntryTypes.setChar(FixProtocol.FIELD_MD_ENTRY_TYPE, (mdEntry.charAt(0)));
+            marketDataRequest.addGroup(noMDEntryTypes);
+        }
+
+
+        MarketDataRequest.NoRelatedSym noRelatedSym = new MarketDataRequest.NoRelatedSym();
+
+        noRelatedSym.setString(FixProtocol.FIELD_SYMBOL, "ALL");
+        marketDataRequest.addGroup(noRelatedSym);
+
+        app.sendMessage(marketDataRequest);
     }
 
     public static long nextRef() {
-        return new Random(System.currentTimeMillis()).nextInt(REF_RAND_SEED);
+        return ref.getAndIncrement();
     }
 
     //http://opalev.blogspot.com/2011/04/apache-ant-windows.html
