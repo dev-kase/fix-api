@@ -26,13 +26,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cb6eb863-c90f-41d2-9ee5-467ee890b3e4" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/log4j_1_2_17.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fix5api.zip" afterPath="$PROJECT_DIR$/fix5api.zip" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/nextfix.jar" afterPath="$PROJECT_DIR$/lib/nextfix.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/etc/FIX50_ext.xml" afterPath="$PROJECT_DIR$/lib/etc/FIX50_ext.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/etc/FIXT11.xml" afterPath="$PROJECT_DIR$/lib/etc/FIXT11.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fix.cfg" afterPath="$PROJECT_DIR$/fix.cfg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sample-fix-app.iml" afterPath="$PROJECT_DIR$/sample-fix-app.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="sample-fix-app.iws" />
@@ -598,7 +591,7 @@
       <workItem from="1429869605022" duration="3436000" />
       <workItem from="1430814104747" duration="1263000" />
       <workItem from="1449643028606" duration="604000" />
-      <workItem from="1449650567099" duration="3105000" />
+      <workItem from="1449650567099" duration="3199000" />
     </task>
     <task id="LOCAL-00001" summary="Зачистка">
       <created>1422005962622</created>
@@ -612,11 +605,17 @@
       <option name="project" value="LOCAL" />
       <updated>1429870686528</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Обновление протокола Next">
+      <created>1449655886867</created>
+      <option name="number" value="00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1449655886867</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="9236000" />
+    <option name="totallyTimeSpent" value="9330000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="49" y="24" width="1551" height="876" extended-state="6" />
@@ -673,7 +672,8 @@
     <MESSAGE value="Поправочки" />
     <MESSAGE value="Зачистка" />
     <MESSAGE value="Обновил настройки и библиотеки" />
-    <option name="LAST_COMMIT_MESSAGE" value="Обновил настройки и библиотеки" />
+    <MESSAGE value="Обновление протокола Next" />
+    <option name="LAST_COMMIT_MESSAGE" value="Обновление протокола Next" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
