@@ -129,6 +129,7 @@
             <value enum='C' description='EMAIL'/>
             <value enum='D' description='ORDER_SINGLE'/>
             <value enum='DL' description='POSITION_TRANSFER_INSTR'/>
+            <value enum='DN' description='POSITION_TRANSFER_REPORT'/>
             <value enum='E' description='ORDER_LIST'/>
             <value enum='F' description='ORDER_CANCEL_REQUEST'/>
             <value enum='G' description='ORDER_CANCEL_REPLACE_REQUEST'/>
@@ -220,6 +221,8 @@
             <value enum='BP' description='SECURITY_DEFINITION_UPDATE_REPORT'/>
             <value enum="CL" description="CHART_LIST"/>
             <value enum="CR" description="CHART_LIST_REQUEST"/>
+            <value enum="CF" description="PARTY_DETAILS_LIST_REQUEST"/>
+            <value enum="CG" description="PARTY_DETAILS_LIST_REPORT"/>
             <value enum="MR" description="MARKET_MAKER_REQUEST"/>
             <value enum="MT" description="MARKET_MAKER_STAT_REQUEST"/>
             <value enum="ML" description="MM_LIABILITY_LIST"/>
@@ -228,6 +231,7 @@
             <value enum="IQR" description="INDICATIVE_QUOTE_REQUEST"/>
             <value enum="IQI" description="INSERT_INDICATIVE_QUOTE"/>
             <value enum="IQC" description="CANCEL_INDICATIVE_QUOTE"/>
+            <value enum="RI" description="REPO_INFO"/>
         </field>
         <field name='NewSeqNo' number='36' type='SEQNUM'/>
         <field name='PossDupFlag' number='43' type='BOOLEAN'/>
