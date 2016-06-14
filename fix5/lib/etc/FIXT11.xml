@@ -219,8 +219,6 @@
             <value enum='BN' description='EXECUTION_ACKNOWLEDGEMENT'/>
             <value enum='BO' description='CONTRARY_INTENTION_REPORT'/>
             <value enum='BP' description='SECURITY_DEFINITION_UPDATE_REPORT'/>
-            <value enum='CA' description='CALENDAR_RESPONSE'/>
-            <value enum='CAR' description='CALENDAR_REQUEST'/>
             <value enum="CL" description="CHART_LIST"/>
             <value enum="CR" description="CHART_LIST_REQUEST"/>
             <value enum="CF" description="PARTY_DETAILS_LIST_REQUEST"/>

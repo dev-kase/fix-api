@@ -439,7 +439,7 @@
         </message>
         <message name="SecurityDefinitionRequest" msgtype="c" msgcat="app">
             <field name="SecurityReqID" required="Y"/>
-            <field name="SecurityRequestType" required="N"/>
+            <field name="SecurityRequestType" required="Y"/>
             <component name="Instrument" required="N"/>
             <component name="InstrumentExtension" required="N"/>
             <component name="UndInstrmtGrp" required="N"/>
@@ -927,7 +927,6 @@
             <field name="DealType" required="N"/>
             <field name="RepoTax" required="N"/>
             <field name="RiskLevel" required="N"/>
-            <field name="SwapDealSerial" required="N"/>
         </message>
         <message name="DontKnowTradeDK" msgtype="Q" msgcat="app">
             <field name="OrderID" required="Y"/>
@@ -2256,13 +2255,7 @@
             <field name="Product" required="N"/>
             <component name="PosDayGrp" required="N"/>
         </message>
-        <message name="CalendarRequest" msgtype="CAR" msgcat="app">
-            <field name="ClOrdID" required="Y"/>
-        </message>
-        <message name="CalendarResponse" msgtype="CA" msgcat="app">
-            <field name="ClOrdID" required="Y"/>
-            <component name="NoCalendarDays" required="N"/>
-        </message>
+
         <message name="PositionArcRequest" msgtype="ACP" msgcat="app">
             <field name="RefTagID" required="N"/>
             <field name="ArcPosDateFrom" required="N"/>
@@ -2903,20 +2896,6 @@
     </messages>
     <components>
 
-        <component name="NoCalendarDays">
-            <group name="CalendarDay" required="Y">
-                <field name="CalendarDate" required="Y"/>
-                <component name="NoDayItems"/>
-            </group>
-        </component>
-
-        <component name="NoDayItems">
-            <group name="DayItem" required="Y">
-                <field name="CountryCode" required="N"/>
-                <field name="DayType" required="N"/>
-            </group>
-        </component>
-
         <component name="PartyDetails">
             <group name="NoPartyDetails" required="N">
                 <field name="PartyDetailID" required="N"/>
@@ -2998,7 +2977,6 @@
         <component name="Instrument">
             <field name="Symbol" required="N"/>
             <field name="SecurityReqID" required="N"/>
-            <field name="SettlPosDate" required="N"/>
             <field name="SymbolSfx" required="N"/>
             <field name="SecurityID" required="N"/>
             <field name="SecurityIDSource" required="N"/>
@@ -5091,8 +5069,6 @@
             <value enum="BN" description="EXECUTION_ACKNOWLEDGEMENT"/>
             <value enum="BO" description="CONTRARY_INTENTION_REPORT"/>
             <value enum="BP" description="SECURITY_DEFINITION_UPDATE_REPORT"/>
-            <value enum="CA" description="CALENDAR_RESPONSE"/>
-            <value enum="CAR" description="CALENDAR_REQUEST"/>
             <value enum="CL" description="CHART_LIST"/>
             <value enum="CR" description="CHART_LIST_REQUEST"/>
             <value enum="CF" description="PARTY_DETAILS_LIST_REQUEST"/>
@@ -8793,21 +8769,8 @@
         <field number="5228" name="RepoCloseDate" type="UTCDATEONLY"/>
         <field number="5229" name="RepoUnderSymbol" type="STRING"/>
         <field number="5230" name="RepoVol" type="INT"/>
-        <field number="5231" name="SwapDealSerial" type="STRING"/>
-
-        <field number="5232" name="CalendarDay" type="NUMINGROUP"/>
-        <field number="5234" name="CalendarDate" type="STRING"/>
-        <field number="5235" name="DayItem" type="NUMINGROUP"/>
-        <field number="5236" name="NoDayType" type="INT"/>
-        <field number="5237" name="CountryCode" type="String"/>
-        <field number="5238" name="DayType" type="CHAR"/>
 
 
-
-
-        <!--        <field number="268" name="NoMDEntries" type="NUMINGROUP"/>
-                <field number="269" name="MDEntryType" type="CHAR">
-                <value enum="0" description="BID"/>-->
 
 
         <!--
