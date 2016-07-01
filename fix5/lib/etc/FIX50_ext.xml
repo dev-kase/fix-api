@@ -8768,7 +8768,7 @@
         <field number="5227" name="RepoOpenDate" type="UTCDATEONLY"/>
         <field number="5228" name="RepoCloseDate" type="UTCDATEONLY"/>
         <field number="5229" name="RepoUnderSymbol" type="STRING"/>
-        <field number="5230" name="RepoVol" type="INT"/>
+        <field number="5230" name="RepoVol" type="FLOAT"/>
 
 
 
