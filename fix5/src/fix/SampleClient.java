@@ -2,10 +2,12 @@ package fix;
 
 import fix.utils.SoutLogger;
 import kz.kase.fix.FixProtocol;
+import kz.kase.fix.MassStatusReqType;
 import kz.kase.fix.SecurityListRequestType;
 import kz.kase.fix.SubscriptionType;
 import kz.kase.fix.factory.KaseFixMessageFactory;
 import kz.kase.fix.messages.MarketDataRequest;
+import kz.kase.fix.messages.OrderMassStatusRequest;
 import kz.kase.fix.messages.OrderStatusRequest;
 import kz.kase.fix.messages.SecurityListRequest;
 import org.apache.log4j.Logger;
@@ -127,6 +129,8 @@ public class SampleClient {
         client.orderStatusReq();
         client.mdRefreshReq();
 
+        client.orderMassStatusRequest("KZTO_T2", "12345");
+
         while (!client.isStopped()) {
             Thread.sleep(HARD_BEAT_SEC);
         }
@@ -154,6 +158,14 @@ public class SampleClient {
         OrderStatusRequest ordReq = new OrderStatusRequest();
         ordReq.setRef(nextRef());
         app.sendMessage(ordReq);
+    }
+
+    private void orderMassStatusRequest(String instrument, String massStatusReqID) {
+        OrderMassStatusRequest req = new OrderMassStatusRequest();
+        req.setMassStatusReqID(massStatusReqID);
+        req.setSymbol(instrument);
+        req.setMassStatusReqType(MassStatusReqType.STATUS_FOR_ALL_ORDERS);
+        app.sendMessage(req);
     }
 
     private void mdRefreshReq() {
