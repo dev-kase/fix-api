@@ -439,7 +439,7 @@
         </message>
         <message name="SecurityDefinitionRequest" msgtype="c" msgcat="app">
             <field name="SecurityReqID" required="Y"/>
-            <field name="SecurityRequestType" required="N"/>
+            <field name="SecurityRequestType" required="Y"/>
             <component name="Instrument" required="N"/>
             <component name="InstrumentExtension" required="N"/>
             <component name="UndInstrmtGrp" required="N"/>
@@ -744,7 +744,7 @@
             <field name="RepoOpenDate" required="N"/>
             <field name="RepoCloseDate" required="N"/>
             <field name="RepoUnderSymbol" required="N"/>
-            <field name="RepoOpenVol" required="N"/>
+            <field name="RepoVol" required="N"/>
         </message>
         <message name="ExecutionReport" msgtype="8" msgcat="app">
             <field name="OrderID" required="N"/>
@@ -927,7 +927,6 @@
             <field name="DealType" required="N"/>
             <field name="RepoTax" required="N"/>
             <field name="RiskLevel" required="N"/>
-            <field name="SwapDealSerial" required="N"/>
         </message>
         <message name="DontKnowTradeDK" msgtype="Q" msgcat="app">
             <field name="OrderID" required="Y"/>
@@ -1104,10 +1103,6 @@
             <field name="ArcPosDateTo" required="N"/>
             <field name="SecurityReqID" required="N"/>
             <field name="SecurityListRequestType" required="N"/>
-        </message>
-        <message name="OrderMassStatusAck" msgtype="MF" msgcat="app">
-            <field name="MassStatusReqID" required="Y"/>
-            <field name="MassStatusReqType" required="N"/>
         </message>
         <message name="OrderMassCancelRequest" msgtype="q" msgcat="app">
             <field name="ClOrdID" required="Y"/>
@@ -2260,13 +2255,7 @@
             <field name="Product" required="N"/>
             <component name="PosDayGrp" required="N"/>
         </message>
-        <message name="CalendarRequest" msgtype="CAR" msgcat="app">
-            <field name="ClOrdID" required="Y"/>
-        </message>
-        <message name="CalendarResponse" msgtype="CA" msgcat="app">
-            <field name="ClOrdID" required="Y"/>
-            <component name="NoCalendarDays" required="N"/>
-        </message>
+
         <message name="PositionArcRequest" msgtype="ACP" msgcat="app">
             <field name="RefTagID" required="N"/>
             <field name="ArcPosDateFrom" required="N"/>
@@ -2907,20 +2896,6 @@
     </messages>
     <components>
 
-        <component name="NoCalendarDays">
-            <group name="CalendarDay" required="Y">
-                <field name="CalendarDate" required="Y"/>
-                <component name="NoDayItems"/>
-            </group>
-        </component>
-
-        <component name="NoDayItems">
-            <group name="DayItem" required="Y">
-                <field name="CountryCode" required="N"/>
-                <field name="DayType" required="N"/>
-            </group>
-        </component>
-
         <component name="PartyDetails">
             <group name="NoPartyDetails" required="N">
                 <field name="PartyDetailID" required="N"/>
@@ -3002,13 +2977,11 @@
         <component name="Instrument">
             <field name="Symbol" required="N"/>
             <field name="SecurityReqID" required="N"/>
-            <field name="SettlPosDate" required="N"/>
             <field name="SymbolSfx" required="N"/>
             <field name="SecurityID" required="N"/>
             <field name="SecurityIDSource" required="N"/>
             <component name="SecAltIDGrp" required="N"/>
             <field name="Product" required="N"/>
-            <field name="ProductComplex" required="N"/>
             <field name="SecurityGroup" required="N"/>
             <field name="CFICode" required="N"/>
             <field name="SecurityType" required="N"/>
@@ -5096,8 +5069,6 @@
             <value enum="BN" description="EXECUTION_ACKNOWLEDGEMENT"/>
             <value enum="BO" description="CONTRARY_INTENTION_REPORT"/>
             <value enum="BP" description="SECURITY_DEFINITION_UPDATE_REPORT"/>
-            <value enum="CA" description="CALENDAR_RESPONSE"/>
-            <value enum="CAR" description="CALENDAR_REQUEST"/>
             <value enum="CL" description="CHART_LIST"/>
             <value enum="CR" description="CHART_LIST_REQUEST"/>
             <value enum="CF" description="PARTY_DETAILS_LIST_REQUEST"/>
@@ -5111,7 +5082,6 @@
             <value enum="IQR" description="INDICATIVE_QUOTE_REQUEST"/>
             <value enum="IQI" description="INSERT_INDICATIVE_QUOTE"/>
             <value enum="RI" description="REPO_INFO"/>
-            <value enum="MF" description="ORDER_MASS_STATUS_ACK"/>
         </field>
         <field number="36" name="NewSeqNo" type="SEQNUM"/>
         <field number="37" name="OrderID" type="STRING"/>
@@ -8529,7 +8499,7 @@
         <field number="1125" name="OrigTradeDate" type="LOCALMKTDATE"/>
         <field number="1126" name="OrigTradeID" type="STRING"/>
         <field number="1127" name="OrigSecondaryTradeID" type="STRING"/>
-        <fieldf number="1128" name="ApplVerID" type="STRING">
+        <field number="1128" name="ApplVerID" type="STRING">
             <value enum="0" description="FIX27"/>
             <value enum="1" description="FIX30"/>
             <value enum="2" description="FIX40"/>
@@ -8538,7 +8508,7 @@
             <value enum="5" description="FIX43"/>
             <value enum="6" description="FIX44"/>
             <value enum="7" description="FIX50"/>
-        </fieldf>
+        </field>
         <field number="1129" name="CstmApplVerID" type="STRING"/>
         <field number="1130" name="RefApplVerID" type="STRING"/>
         <field number="1131" name="RefCstmApplVerID" type="STRING"/>
@@ -8562,7 +8532,6 @@
         <field number="1150" name="TradingReferencePrice" type="FLOAT"/>
         <field number="1151" name="SecurityGroup" type="STRING"/>
         <field number="1173" name="MDSubBookType" type="STRING"/>
-        <field number="1227" name="ProductComplex" type="STRING"/>
         <field number="1245" name="TradingCurrency" type="STRING"/>
         <field number="1237" name="NoOrdTypeRules" type="INT"/>
         <field number="1239" name="NoTimeInForceRules" type="INT"/>
@@ -8799,29 +8768,14 @@
         <field number="5227" name="RepoOpenDate" type="UTCDATEONLY"/>
         <field number="5228" name="RepoCloseDate" type="UTCDATEONLY"/>
         <field number="5229" name="RepoUnderSymbol" type="STRING"/>
-        <field number="5230" name="RepoOpenVol" type="FLOAT"/>
-        <field number="5231" name="SwapDealSerial" type="STRING"/>
-
-        <field number="5232" name="CalendarDay" type="NUMINGROUP"/>
-        <field number="5234" name="CalendarDate" type="UTCDATEONLY"/>
-        <field number="5235" name="DayItem" type="NUMINGROUP"/>
-        <field number="5236" name="NoDayType" type="INT"/>
-        <field number="5237" name="CountryCode" type="String"/>
-        <field number="5238" name="DayType" type="CHAR"/>
-
-        <!--<field number="5239" name="IsBlocked" type="BOOLEAN"/>-->
+        <field number="5230" name="RepoVol" type="FLOAT"/>
 
 
-
-
-        <!--        <field number="268" name="NoMDEntries" type="NUMINGROUP"/>
-                <field number="269" name="MDEntryType" type="CHAR">
-                <value enum="0" description="BID"/>-->
 
 
         <!--
     int FIELD_REPO_UNDER_SYMBOL = 5229;
-    int FIELD_REPO_OPEN_VOL = 5230;-->
+    int FIELD_REPO_VOL = 5230;-->
 
         <!--Futures-->
         <field number="5190" name="IsFuture" type="BOOLEAN"/>
