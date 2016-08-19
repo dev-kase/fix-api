@@ -4870,7 +4870,7 @@
         <field number="8" name="BeginString" type="STRING"/>
         <field number="9" name="BodyLength" type="LENGTH"/>
         <field number="10" name="CheckSum" type="STRING"/>
-        <field number="11" name="ClOrdID" type="STRING"/>
+        <field number="11" name="ClOrdID" type="LONG"/>
         <field number="12" name="Commission" type="AMT"/>
         <field number="13" name="CommType" type="CHAR">
             <value enum="1" description="PER_UNIT"/>
@@ -5152,6 +5152,7 @@
             <value enum="P" description="PEGGED"/>
             <value enum="Q" description="COUNTER_ORDER_SELECTION"/>
             <value enum="R" description="REPO"/>
+            <value enum="N" description="REPO_NETTING"/>
         </field>
         <field number="41" name="OrigClOrdID" type="STRING"/>
         <field number="42" name="OrigTime" type="UTCTIMESTAMP"/>
