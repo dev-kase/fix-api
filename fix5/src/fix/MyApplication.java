@@ -3,10 +3,7 @@ package fix;
 import kz.kase.fix.EncryptMethod;
 import kz.kase.fix.ExecType;
 import kz.kase.fix.TimeInForce;
-import kz.kase.fix.messages.ExecutionReport;
-import kz.kase.fix.messages.Logon;
-import kz.kase.fix.messages.MDIncRefresh;
-import kz.kase.fix.messages.SecurityList;
+import kz.kase.fix.messages.*;
 import org.apache.log4j.Logger;
 import quickfix.*;
 
@@ -31,6 +28,11 @@ public class MyApplication implements Application {
     public static final DateFormat dateFormatter2 = new SimpleDateFormat("yyyyMMdd");
     public static final DateFormat dateFormatter3 = new SimpleDateFormat("yyyy-MM-dd");
     public static final DateFormat dateFormatter4 = new SimpleDateFormat("HH:mm:ss");
+
+    public static final String WRONG_PASSWORD = "Wrong password";
+    public static final String ALREADY_ONLINE = "Already online";
+
+    private boolean doReconnect = false;
 
     private final CountDownLatch logonLatch = new CountDownLatch(1);
     private HashMap<String, String> ninsBySymbol;
@@ -79,6 +81,20 @@ public class MyApplication implements Application {
     @Override
     public void fromAdmin(Message message, SessionID sessionID)
             throws IncorrectDataFormat, IncorrectTagValue, RejectLogon {
+        if (message instanceof Logout) {
+            Logout logout = (Logout) message;
+            if (!logout.getText().equals(WRONG_PASSWORD) ||
+                    !logout.getText().equals(ALREADY_ONLINE)) {
+                doReconnect = true;
+            }
+        }
+
+        if (message instanceof Logon) {
+            if (doReconnect) {
+                sendAfterReconnect();
+                doReconnect = false;
+            }
+        }
     }
 
     @Override
@@ -352,5 +368,12 @@ public class MyApplication implements Application {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void sendAfterReconnect() {
+//        sendSecurityRequest();
+//        sendPositionRequest();
+//        sendOrderStatusRequest();
+//        sendCalendarRequest();
     }
 }
