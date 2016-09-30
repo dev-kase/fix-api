@@ -5153,6 +5153,7 @@
             <value enum="Q" description="COUNTER_ORDER_SELECTION"/>
             <value enum="R" description="REPO"/>
             <value enum="N" description="REPO_NETTING"/>
+            <value enum="T" description="DIRECT"/>
         </field>
         <field number="41" name="OrigClOrdID" type="STRING"/>
         <field number="42" name="OrigTime" type="UTCTIMESTAMP"/>
