@@ -2912,6 +2912,10 @@
             <field name="IndiQuoteId" required="N"/>
             <field name="CancelIndiQuoteStatus" required="N"/>
         </message>
+        <message name="UserNotification" msgtype="CB" msgcat="app">
+            <field name="UserStatus" required="Y"/>
+            <field name="Text" required="Y"/>
+        </message>
     </messages>
     <components>
 
@@ -3106,6 +3110,8 @@
             <field name="CouponPaymentDates" required="N"/>
             <field name="ExchangeRate" required="N"/>
             <field name="ContractMultiplier" required="N"/>
+            <field name="ConversionStatus" required="N"/>
+            <field name="RequestDateCourse" required="N"/>
         </component>
         <component name="InstrumentExtension">
             <field name="DeliveryForm" required="N"/>ё
@@ -4870,7 +4876,7 @@
         <field number="8" name="BeginString" type="STRING"/>
         <field number="9" name="BodyLength" type="LENGTH"/>
         <field number="10" name="CheckSum" type="STRING"/>
-        <field number="11" name="ClOrdID" type="LONG"/>
+        <field number="11" name="ClOrdID" type="STRING"/>
         <field number="12" name="Commission" type="AMT"/>
         <field number="13" name="CommType" type="CHAR">
             <value enum="1" description="PER_UNIT"/>
@@ -5121,6 +5127,7 @@
             <value enum="RI" description="REPO_INFO"/>
             <value enum="MF" description="ORDER_MASS_STATUS_ACK"/>
             <value enum="SR" description="MESSAGE_GROUP_STATUS_REQUEST"/>
+            <value enum="CB" description="USER_NOTIFICATION"/>
         </field>
         <field number="36" name="NewSeqNo" type="SEQNUM"/>
         <field number="37" name="OrderID" type="STRING"/>
@@ -6470,6 +6477,10 @@
             <value enum="17" description="PRODUCT_TICKS_IN_THIRTY_SECONDS"/>
             <value enum="18" description="PRODUCT_TICKS_IN_SIXTY_FORTHS"/>
             <value enum="19" description="PRODUCT_TICKS_IN_ONE_TWENTY_EIGHTS"/>
+            <value enum="20" description="QUOTATION_CURRENCY"/>
+            <value enum="21" description="AUTO_REPO_INSTR"/>
+            <value enum="22" description="NET_REPO_INSTR"/>
+            <value enum="23" description="UNKNOWN"/>
         </field>
         <field number="5201" name="AvegPrc" type="FLOAT"/>
         <field number="5202" name="AvegPrcPrev" type="FLOAT"/>
@@ -8043,6 +8054,8 @@
             <value enum="4" description="PASSWORD_INCORRECT"/>
             <value enum="5" description="PASSWORD_CHANGED"/>
             <value enum="6" description="OTHER"/>
+            <value enum="7" description="TECHNICAL_DISCONNECT"/>
+            <value enum="8" description="TECHNICAL_DISCONNECT_OVER"/>
         </field>
         <field number="927" name="UserStatusText" type="STRING"/>
         <field number="928" name="StatusValue" type="INT">
@@ -8814,20 +8827,13 @@
         <field number="5231" name="SwapDealSerial" type="STRING"/>
 
         <field number="5232" name="CalendarDay" type="NUMINGROUP"/>
-        <field number="5234" name="CalendarDate" type="UTCDATEONLY"/>
+        <field number="5234" name="CalendarDate" type="String"/>
         <field number="5235" name="DayItem" type="NUMINGROUP"/>
         <field number="5236" name="NoDayType" type="INT"/>
         <field number="5237" name="CountryCode" type="String"/>
         <field number="5238" name="DayType" type="CHAR"/>
 
-        <field number="5300" name="TypeForGroupStatus" type="INT">
-            <value enum="0" description="ORDER"/>
-            <value enum="1" description="POSITION"/>
-        </field>
-
         <!--<field number="5239" name="IsBlocked" type="BOOLEAN"/>-->
-
-
         <!--        <field number="268" name="NoMDEntries" type="NUMINGROUP"/>
                 <field number="269" name="MDEntryType" type="CHAR">
                 <value enum="0" description="BID"/>-->
@@ -8842,6 +8848,12 @@
         <field number="5191" name="ContractMultiplier" type="INT"/>
         <field number="5192" name="UnderlyingInstrId" type="STRING"/>
         <field number="5194" name="MaintenanceMargin" type="FLOAT"/>
+        <field number="5240" name="ConversionStatus" type="INT"/>
+        <field number="5241" name="RequestDateCourse" type="FLOAT"/>
+        <field number="5300" name="TypeForGroupStatus" type="INT">
+            <value enum="0" description="ORDER"/>
+            <value enum="1" description="POSITION"/>
+        </field>
         <field number="1312" name="NoNestedInstrAttrib" type="NUMINGROUP"/>
         <field number="1210" name="NestedInstrAttribType" type="INT"/>
         <field number="1211" name="NestedInstrAttribValue" type="STRING"/>

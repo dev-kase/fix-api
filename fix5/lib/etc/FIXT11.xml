@@ -236,6 +236,7 @@
             <value enum="RI" description="REPO_INFO"/>
             <value enum="MF" description="ORDER_MASS_STATUS_ACK"/>
             <value enum="SR" description="MESSAGE_ORDER_PARTIAL_STATUS_REQUEST"/>
+            <value enum="CB" description="USER_NOTIFICATION"/>
         </field>
         <field name='NewSeqNo' number='36' type='SEQNUM'/>
         <field name='PossDupFlag' number='43' type='BOOLEAN'/>
