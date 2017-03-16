@@ -928,6 +928,7 @@
             <field name="RepoTax" required="N"/>
             <field name="RiskLevel" required="N"/>
             <field name="SwapDealSerial" required="N"/>
+            <field name="AllocationMarketType" required="N"/>
         </message>
         <message name="DontKnowTradeDK" msgtype="Q" msgcat="app">
             <field name="OrderID" required="Y"/>
@@ -5598,6 +5599,7 @@
             <value enum="OOP" description="OPTIONS_ON_PHYSICAL"/>
             <value enum="OOF" description="OPTIONS_ON_FUTURES"/>
             <value enum="CASH" description="CASH"/>
+            <value enum="OTHR" description="OTHER"/>
         </field>
         <field number="168" name="EffectiveTime" type="UTCTIMESTAMP"/>
         <field number="169" name="StandInstDbType" type="INT">
@@ -8850,6 +8852,11 @@
         <field number="5194" name="MaintenanceMargin" type="FLOAT"/>
         <field number="5240" name="ConversionStatus" type="INT"/>
         <field number="5241" name="RequestDateCourse" type="FLOAT"/>
+        <field number="5250" name="AllocationMarketType" type="INT">
+            <value enum="0" description="SECONDARY"/>
+            <value enum="1" description="PRIMARY"/>
+        </field>
+
         <field number="5300" name="TypeForGroupStatus" type="INT">
             <value enum="0" description="ORDER"/>
             <value enum="1" description="POSITION"/>
