@@ -3115,7 +3115,7 @@
             <field name="RequestDateCourse" required="N"/>
         </component>
         <component name="InstrumentExtension">
-            <field name="DeliveryForm" required="N"/>ё
+            <field name="DeliveryForm" required="N"/>
             <field name="PctAtRisk" required="N"/>
             <component name="AttrbGrp" required="N"/>
         </component>
