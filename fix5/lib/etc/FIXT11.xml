@@ -78,6 +78,7 @@
             <field name='Username' required='N'/>
             <field name='Password' required='N'/>
             <field name='MemberName' required='N'/>
+			<field name='BrokerID' required='N'/>			
             <field name='Text' required='N'/>
             <field name='DefaultApplVerID' required='Y'/>
             <field name='NewPassword' required='N'/>
@@ -340,7 +341,8 @@
         <field name='RefApplVerID' number='1130' type='STRING'/>
         <field name='RefCstmApplVerID' number='1131' type='STRING'/>
         <field name='DefaultApplVerID' number='1137' type='STRING'/>
-        <field number="5183" name="MemberName" type="STRING"/>
+        <field name="MemberName" number="5183" type="STRING"/>
+        <field name="BrokerID" number="5184" type="STRING"/>
         <field name='NewPassword' number='5195' type='STRING'/>
         <field name='EncryptedPasswordMethod' number='5196' type='INT'/>
         <field name='EncryptedPasswordLen' number='5197' type='INT'/>

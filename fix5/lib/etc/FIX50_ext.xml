@@ -3113,9 +3113,10 @@
             <field name="ContractMultiplier" required="N"/>
             <field name="ConversionStatus" required="N"/>
             <field name="RequestDateCourse" required="N"/>
+            <component name="ComplexEvents" required="N"/>
         </component>
         <component name="InstrumentExtension">
-            <field name="DeliveryForm" required="N"/>
+            <field name="DeliveryForm" required="N"/>ё
             <field name="PctAtRisk" required="N"/>
             <component name="AttrbGrp" required="N"/>
         </component>
@@ -4856,6 +4857,19 @@
             </group>
         </component>
 
+        <component name="ComplexEvents">
+            <group name="NoComplexEvents" required="N">
+                <field name="ComplexEventType" required="N"/>
+                <field name="ComplexEventPrice" required="N"/>
+                <component name="ComplexEventDates" required="N"/>
+            </group>
+        </component>
+        <component name="ComplexEventDates">
+            <group name="NoComplexEventDates" required="N">
+                <field name="ComplexEventStartDate" required="N"/>
+                <field name="ComplexEventEndDate" required="N"/>
+            </group>
+        </component>
     </components>
     <fields>
         <field number="1" name="Account" type="STRING"/>
@@ -6212,6 +6226,7 @@
             <value enum="21" description="PRE_OPEN"/>
             <value enum="22" description="OPENING_ROTATION"/>
             <value enum="23" description="FAST_MARKET"/>
+            <value enum="27" description="FRANKFURT"/>
             <value enum="3" description="RESUME"/>
             <value enum="4" description="NO_OPEN_NO_RESUME"/>
             <value enum="5" description="PRICE_INDICATION"/>
@@ -8800,7 +8815,7 @@
         <field number="5188" name="DealType" type="STRING"/>
         <field number="5189" name="RefSesId" type="STRING"/>
         <field number="5204" name="Message" type="STRING"/>
-        <field number="5205" name="LastDealDate" type="UTCDATEONLY"/>
+        <field number="5205" name="LastDealDate" type="UTCTIMESTAMP"/>
         <field number="5206" name="TargetAccount" type="STRING"/>
 
         <field number="5210" name="RepoTax" type="FLOAT"/>
@@ -8866,6 +8881,26 @@
         <field number="1211" name="NestedInstrAttribValue" type="STRING"/>
         <field number="40746" name="PaymentStreamDiscountRateDayCount" type="STRING"/>
         <field number="40739" name="PaymentStreamMarketRate" type="FLOAT"/>
+
+        <!--For Frankfurt-->
+        <field number="1483" name="NoComplexEvents" type="NUMINGROUP"/>
+        <field number="1484" name="ComplexEventType" type="INT">
+            <value enum="1" description="CAPPED"/>
+            <value enum="2" description="TRIGGER"/>
+            <value enum="3" description="KNOCK_IN_UP"/>
+            <value enum="4" description="KNOCK_IN_DOWN"/>
+            <value enum="5" description="KNOCK_OUT_UP"/>
+            <value enum="6" description="KNOCK_OUT_DOWN"/>
+            <value enum="7" description="UNDERLYING"/>
+            <value enum="8" description="RESET_BARRIER"/>
+            <value enum="9" description="ROLLING_BARRIER"/>
+            <value enum="98" description="FRANKFURT"/>
+            <value enum="99" description="OTHER"/>
+        </field>
+        <field number="1486" name="ComplexEventPrice" type="PRICE"/>
+        <field number="1491" name="NoComplexEventDates" type="NUMINGROUP"/>
+        <field number="1492" name="ComplexEventStartDate" type="UTCTIMESTAMP"/>
+        <field number="1493" name="ComplexEventEndDate" type="UTCTIMESTAMP"/>
 
     </fields>
 </fix>
