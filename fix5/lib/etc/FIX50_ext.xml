@@ -8815,7 +8815,7 @@
         <field number="5188" name="DealType" type="STRING"/>
         <field number="5189" name="RefSesId" type="STRING"/>
         <field number="5204" name="Message" type="STRING"/>
-        <field number="5205" name="LastDealDate" type="UTCTIMESTAMP"/>
+        <field number="5205" name="LastDealDate" type="UTCDATEONLY"/>
         <field number="5206" name="TargetAccount" type="STRING"/>
 
         <field number="5210" name="RepoTax" type="FLOAT"/>
