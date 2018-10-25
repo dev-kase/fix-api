@@ -83,8 +83,8 @@ public class MyApplication implements Application {
             throws IncorrectDataFormat, IncorrectTagValue, RejectLogon {
         if (message instanceof Logout) {
             Logout logout = (Logout) message;
-            if (!logout.getText().equals(WRONG_PASSWORD) ||
-                    !logout.getText().equals(ALREADY_ONLINE)) {
+            if (logout.getText()!=null && ( !logout.getText().equals(WRONG_PASSWORD) ||
+                    !logout.getText().equals(ALREADY_ONLINE))) {
                 doReconnect = true;
             }
         }
